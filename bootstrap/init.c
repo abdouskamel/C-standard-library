@@ -13,19 +13,14 @@ void _start()
     int argc;
     char **argv;
 
-    /*
-     * argc is at (%rsp).
-     * argv is located 8 bytes after argc.
-     */
+    // argc is at (%rsp).
+    // argv is located 8 bytes after argc.
     asm("mov (%%rsp), %0\n"
         "lea 8(%%rsp), %1"
         : "=r"(argc), "=r"(argv));
 
-    /*
-     * argv is an array of #argc elements.
-     * We skip all those elements, plus the NULL value at the end of argv
-     * to reach envp.
-     */
+    // argv is an array of #argc elements.
+    // We skip all those elements, plus the NULL value at the end of argv to reach envp.
     char **envp = argv + argc + 1;
 
     if (mem_init() == -1)

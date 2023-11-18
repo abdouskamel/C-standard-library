@@ -4,9 +4,9 @@
 
 #define MAX_HEAP 0xffffffff
 
-static char *mem_heap;     /* First byte of the heap */
-static char *mem_brk;      /* First byte not in the heap */
-static char *mem_heap_end; /* Points to the end of the heap + 1 */
+static char *mem_heap;     // First byte of the heap
+static char *mem_brk;      // First byte not in the heap
+static char *mem_heap_end; // Pointer to the end of the heap + 1
 
 void mem_init(void)
 {

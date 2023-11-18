@@ -3,9 +3,8 @@
 #include <stdio.h>
 
 /*
- * Note that this is kernel brk.
- * Return the new break on success,
- * and the current break on failure.
+ * This is kernel brk.
+ * Return the new break on success and the current break on failure.
  */
 void *brk(void *addr)
 {

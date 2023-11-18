@@ -68,7 +68,7 @@ static void *extend_heap(size_t words)
     PUT(FTRP(bp), PACK(size, 0));
     PUT(HDRP(NEXT_BLKP(bp)), PACK(0, 1));
 
-    /* Coalesce if the previous block was free */
+    // Coalesce if the previous block was free
     return (coalesce(bp));
 }
 

@@ -6,10 +6,10 @@ FILE *fopen(const char *filename, const char *mode)
 {
     FILE *file = malloc(sizeof(FILE));
 
-    /* Boolean indicating if the file is opened in binary mode */
+    // Boolean indicating if the file is opened in binary mode
     int bin_mode = 0;
 
-    /* Check open mode */
+    // Check open mode
     switch (*(mode++))
     {
     case 'r':
@@ -39,12 +39,12 @@ FILE *fopen(const char *filename, const char *mode)
     {
         bin_mode = 1;
 
-        /* + can be either at the middle, or at the end of mode */
+        // + can be either at the middle, or at the end of mode
         if (*mode == '+')
             file->flags |= O_RDWR;
     }
 
-    /* Open the file */
+    // Open the file
     file->fd = open(filename, file->flags, S_IRWXU);
     if (file->fd < 0)
     {
@@ -57,11 +57,11 @@ FILE *fopen(const char *filename, const char *mode)
     file->buffer = NULL;
     file->self_allocated_buff = 1;
 
-    /* In bin mode, we use fully buffered streams. */
+    // In bin mode, we use fully buffered streams.
     if (bin_mode)
         ret = setvbuf(file, NULL, _IOFBF, BUFSIZ);
 
-    /* In text mode, we use line buffered streams. */
+    // In text mode, we use line buffered streams.
     else
         ret = setvbuf(file, NULL, _IOLBF, BUFSIZ);
 
@@ -127,7 +127,7 @@ int setvbuf(FILE *stream, char *buffer, int mode, size_t size)
 
     stream->buff_size = size;
 
-    /* If buffer is NULL, we let the library allocate it */
+    // If buffer is NULL, we let the library allocate it
     if (buffer == NULL)
     {
         stream->buffer = malloc(size);
@@ -153,24 +153,21 @@ int fflush(FILE *stream)
 {
     if (stream == NULL)
     {
-        /* TODO: Flush all open streams */
+        // TODO: Flush all open streams
     }
 
-    /* We do nothing if there's no buffering,
-       or if no IO operation has been done */
-    if (stream->buff_mode == _IONBF ||
-        stream->last_op == NO_IO_OP)
+    // We do nothing if there's no buffering or if no IO operation has been done
+    if (stream->buff_mode == _IONBF || stream->last_op == NO_IO_OP)
         return (0);
 
-    /* The buffer is an input buffer, just clear it. */
+    // The buffer is an input buffer, just clear it.
     if (stream->last_op == INPUT_OP)
     {
         stream->buff_pos = 0;
         stream->buff_end = 0;
     }
 
-    /* The buffer is an output buffer,
-       get all its content written to the file */
+    // The buffer is an output buffer, get all its content written to the file
     else
     {
         if (write(stream->fd, stream->buffer + stream->buff_pos,

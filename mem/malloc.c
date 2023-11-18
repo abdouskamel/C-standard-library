@@ -15,17 +15,17 @@ int mem_init(void)
     if ((heap_listp = sbrk(DSIZE * 3)) == NULL)
         return (-1);
 
-    /* Prologue header */
+    // Prologue header
     PUT(heap_listp, PACK(2 * DSIZE, 1));
 
-    /* Prologue footer */
+    // Prologue footer
     heap_listp += DSIZE;
     PUT(heap_listp, PACK(2 * DSIZE, 1));
 
-    /* Epilogue header */
+    // Epilogue header
     PUT(heap_listp + DSIZE, PACK(0, 1));
 
-    /* The heap is at first CHUNKSIZE bytes */
+    // The heap is at first CHUNKSIZE bytes
     if (extend_heap(CHUNKSIZE) == NULL)
         return (-1);
 
@@ -102,8 +102,7 @@ void *malloc(size_t size)
     if (size == 0)
         return (NULL);
 
-    /* We add to size header and footer sizes, and we round it up
-       for 16-byte alignment */
+    // We add to size header and footer sizes, and we round it up for 16-byte alignment
     size_t asize = 2 * DSIZE * ((size + 2 * DSIZE + (2 * DSIZE - 1)) / (2 * DSIZE));
 
     char *pp;
@@ -113,7 +112,7 @@ void *malloc(size_t size)
         return (pp);
     }
 
-    /* We don't want to extend the heap by a value inferior to CHUNKSIZE */
+    // We don't want to extend the heap by a value inferior to CHUNKSIZE
     size_t extendsize = MAX(asize, CHUNKSIZE);
     if ((pp = extend_heap(extendsize)) == NULL)
         return (NULL);

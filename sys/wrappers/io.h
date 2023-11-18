@@ -7,7 +7,7 @@
 typedef int64_t ssize_t;
 typedef uint32_t mode_t;
 
-/* Flags for open syscall */
+// Flags for open syscall
 #define O_RDONLY 0
 #define O_WRONLY 1
 #define O_RDWR 2
@@ -17,7 +17,7 @@ typedef uint32_t mode_t;
 
 #define is_read_mode(flags) (((flags) & 0x01) == 0)
 
-/* Modes for open syscall */
+// Modes for open syscall
 #define S_IRWXU 0700
 #define S_IRUSR 0400
 #define S_IWUSR 0200
